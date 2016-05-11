@@ -24,10 +24,10 @@
     // initialize the TinyMCE editor after adding an inline
     // XXX: We don't use jQuery's click event as it won't work in Django 1.4
     document.body.addEventListener("click", function(ev) {
-      if(!ev.target.parentNode || ev.target.parentNode.className.indexOf("add-row") === -1) {
-        return;
-      }
-      var $addRow = $(ev.target.parentNode);
+
+      // We always use stacked inlines so use this method instead
+      var $addRow = $(ev.target).closest('tr').prev();
+
       setTimeout(function() {  // We have to wait until the inline is added
         $('textarea.tinymce', $addRow.parent()).each(function () {
           initTinyMCE($(this));
