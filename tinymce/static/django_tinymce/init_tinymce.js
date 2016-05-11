@@ -25,14 +25,25 @@
     // XXX: We don't use jQuery's click event as it won't work in Django 1.4
     document.body.addEventListener("click", function(ev) {
 
-      // We always use stacked inlines so use this method instead
+      // Check for tabular inlines
       var $addRow = $(ev.target).closest('tr').prev();
+      if($addRow.length == 0) {
 
-      setTimeout(function() {  // We have to wait until the inline is added
-        $('textarea.tinymce', $addRow.parent()).each(function () {
-          initTinyMCE($(this));
-        });
-      }, 0);
+        // Stacked inlines
+        $addRow = $(ev.target.parentNode);
+
+      }
+
+      if($addRow.length > 0) {
+
+        setTimeout(function() {  // We have to wait until the inline is added
+          $('textarea.tinymce', $addRow.parent()).each(function () {
+            initTinyMCE($(this));
+          });
+        }, 0);
+
+      }
+
     }, true);
   });
 }(django.jQuery));
